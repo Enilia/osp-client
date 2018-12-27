@@ -4,7 +4,7 @@ import store from './store';
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:8080',
+  connection: ':8080',
   vuex: {
     store,
     actionPrefix: 'SOCKET_',
