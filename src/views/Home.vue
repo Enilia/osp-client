@@ -1,10 +1,5 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <h1>Welcome to Your Vue.js App</h1>
-    nickname: {{ nickname }}
-    <br><input v-model="newNickname"> <button type="button" @click="rename">rename</button>
-  </div>
+
 </template>
 
 <script lang="ts">
