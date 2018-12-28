@@ -1,0 +1,1 @@
+import './directives/osp-width'
