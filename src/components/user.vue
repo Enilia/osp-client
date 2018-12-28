@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate @submit.prevent="rename">
+    <form novalidate @submit.prevent="blur">
       <md-field>
         <md-icon>person</md-icon>
         <label v-osp-width="userid" @osp-width-change="useridWidth = $event"> @{{ userid }} </label>
@@ -43,12 +43,15 @@ export default class UserComponent extends Vue {
     this.newNickname = this.nickname
   }
 
-  rename() {
-    if(this.newNickname !== this.nickname)
-      this.$socket.emit('renameUser', this.newNickname)
+  blur() {
     const mdInput = (this.$refs.input as Vue)
     const input = mdInput.$el as HTMLInputElement
     input.blur()
+  }
+
+  rename() {
+    if(this.newNickname !== this.nickname)
+      this.$socket.emit('renameUser', this.newNickname)
   }
 
 }
