@@ -3,7 +3,7 @@
     <form novalidate @submit.prevent="rename">
       <md-field>
         <md-icon>person</md-icon>
-        <label v-osp-width="userid" @osp-width-change="useridWidth = $event">({{ userid }})</label>
+        <label v-osp-width="userid" @osp-width-change="useridWidth = $event"> @{{ userid }} </label>
         <md-input :value="nickname" ref="input" @blur="rename" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
         <md-icon>edit</md-icon>
       </md-field>
@@ -22,7 +22,7 @@ import { State } from 'vuex-class';
 @Component<UserComponent>({
   computed: {
     inputWidth() {
-      return Math.max( this.newNicknameWidth, this.useridWidth )
+      return Math.max( this.newNicknameWidth, this.useridWidth ) + 5
     }
   }
 })
