@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { MdButton, MdContent, MdApp, MdToolbar, MdIcon, MdField, MdLayout } from 'vue-material/dist/components'
+import { MdButton, MdContent, MdApp, MdToolbar, MdIcon, MdField, MdLayout, MdCard, MdDivider } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
 
@@ -10,3 +10,5 @@ Vue.use(MdToolbar)
 Vue.use(MdIcon)
 Vue.use(MdField)
 Vue.use(MdLayout)
+Vue.use(MdCard)
+Vue.use(MdDivider)

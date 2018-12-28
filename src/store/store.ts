@@ -12,8 +12,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    [SOCKETIO_USER_UPDATED] ( state, user ) {
-      state.user = user
+    [SOCKETIO_USER_UPDATED] ( state, { id, nickname } ) {
+      state.user = { ...state.user, id, nickname }
     },
     [SOCKETIO_USER_RENAMED] ( state, nickname ) {
       state.user = { ...state.user, nickname }

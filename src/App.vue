@@ -6,8 +6,10 @@
         <div class="spacer"></div>
         <osp-user></osp-user>
       </md-app-toolbar>
+      <md-app-content>
+        <router-view/>
+      </md-app-content>
     </md-app>
-    <router-view/>
   </div>
 </template>
 
