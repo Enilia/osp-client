@@ -22,8 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class HomeComponent extends Vue {
@@ -39,7 +38,6 @@ export default class HomeComponent extends Vue {
   }
 
 }
-
 </script>
 
 <style lang="scss" scoped>
