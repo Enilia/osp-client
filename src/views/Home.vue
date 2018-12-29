@@ -1,12 +1,14 @@
 <template>
   <div class="home">
     <md-card md-with-hover>
-      <md-card-content class="create">
-        <md-field md-clearable>
-          <label>Room</label>
-          <md-input autofocus v-model="roomid" required maxlength="6"></md-input>
-        </md-field>
-        <md-button class="md-raised md-accent" @click="join(roomid)" :disabled="!valid">Join</md-button>
+      <md-card-content>
+        <form @submit.prevent="valid && join(roomid)" class="create">
+          <md-field md-clearable>
+            <label>Room</label>
+            <md-input autofocus v-model="roomid" required maxlength="6"></md-input>
+          </md-field>
+          <md-button type="submit" class="md-raised md-accent" :disabled="!valid">Join</md-button>
+        </form>
       </md-card-content>
     </md-card>
 
@@ -27,7 +29,7 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component<HomeComponent>({
   computed: {
     valid() {
-      return /[a-z0-9]{6}/.test(this.roomid)
+      return /^[a-z0-9]{6}$/.test(this.roomid)
     }
   }
 })
