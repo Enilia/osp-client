@@ -24,7 +24,7 @@ export default new Router({
         } else {
           next({ name: 'home', query: { join: to.params.id } })
         }
-      }
+      },
     },
     // {
     //   path: '/about',
