@@ -10,13 +10,14 @@ const emit = (vnode: VNode, name: string, data: any) => {
 }
 
 Vue.directive('osp-width', {
-  bind( el, {modifiers} ) {
+  bind( el, {modifiers}, vnode ) {
     if(modifiers.hide) {
       el.style.visibility = 'hidden'
       el.style.position = 'absolute'
       el.style.left = '-9999px'
       el.style.top = '-9999px'
     }
+    emit(vnode, 'osp-width-change', el.offsetWidth)
   },
   componentUpdated( el, {value, oldValue}, vnode ) {
     if( value === oldValue) return
