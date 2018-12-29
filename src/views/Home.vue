@@ -5,7 +5,7 @@
         <form @submit.prevent="valid && join(roomid)" class="create">
           <md-field md-clearable>
             <label>Room</label>
-            <md-input autofocus v-model="roomid" required maxlength="6"></md-input>
+            <md-input v-autofocus v-model="roomid" required maxlength="6"></md-input>
           </md-field>
           <md-button type="submit" class="md-raised md-accent" :disabled="!valid">Join</md-button>
         </form>
