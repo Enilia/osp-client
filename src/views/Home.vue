@@ -4,9 +4,9 @@
       <md-card-content class="create">
         <md-field>
           <label>Room</label>
-          <md-input autofocus></md-input>
+          <md-input autofocus v-model="roomid"></md-input>
         </md-field>
-        <md-button class="md-raised md-accent">Join</md-button>
+        <md-button class="md-raised md-accent" @click="join">Join</md-button>
       </md-card-content>
     </md-card>
 
@@ -15,7 +15,7 @@
         <div>
           No room yet ? Create one here
         </div>
-        <md-button class="md-raised md-primary">Create</md-button>
+        <md-button class="md-raised md-primary" @click="create">Create</md-button>
       </md-card-content>
     </md-card>
   </div>
@@ -28,6 +28,15 @@ import { State } from 'vuex-class'
 @Component
 export default class HomeComponent extends Vue {
 
+  roomid: string = ''
+
+  create() {
+    this.$socket.emit('createRoom')
+  }
+
+  join() {
+    this.$socket.emit('joinRoom', this.roomid)
+  }
 
 }
 
