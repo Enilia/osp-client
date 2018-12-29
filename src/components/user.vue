@@ -3,8 +3,8 @@
     <form novalidate @submit.prevent="blur">
       <md-field>
         <md-icon>person</md-icon>
-        <label v-osp-width="userid" @osp-width-change="useridWidth = $event"> @{{ userid }} </label>
-        <md-input :value="nickname" ref="input" @blur="rename" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
+        <label v-osp-width="user.id" @osp-width-change="useridWidth = $event"> @{{ user.id }} </label>
+        <md-input :value="user.nickname" ref="input" @blur="rename" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
         <md-icon>edit</md-icon>
       </md-field>
     </form>
@@ -18,6 +18,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { State } from 'vuex-class';
+import { User } from '@/interfaces/user.interface';
 
 @Component<UserComponent>({
   computed: {
@@ -28,11 +29,8 @@ import { State } from 'vuex-class';
 })
 export default class UserComponent extends Vue {
 
-  @State( state => state.user.id )
-  userid!: string
-
-  @State( state => state.user.nickname )
-  nickname!: string
+  @State('user')
+  user!: User
 
   newNickname: string = ''
 
@@ -40,7 +38,7 @@ export default class UserComponent extends Vue {
   useridWidth = 0
 
   mounted() {
-    this.newNickname = this.nickname
+    this.newNickname = this.user.nickname
   }
 
   blur() {
@@ -50,7 +48,7 @@ export default class UserComponent extends Vue {
   }
 
   rename() {
-    if(this.newNickname !== this.nickname)
+    if(this.newNickname !== this.user.nickname)
       this.$socket.emit('renameUser', this.newNickname)
   }
 
