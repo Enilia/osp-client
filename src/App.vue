@@ -2,7 +2,7 @@
   <div>
     <md-app>
       <md-app-toolbar>
-        <span class="md-title">Online Scrum Poker</span>
+        <router-link :to="{name: 'home'}"><span class="md-title">Online Scrum Poker</span></router-link>
         <div class="spacer"></div>
         <osp-user></osp-user>
       </md-app-toolbar>
@@ -13,7 +13,7 @@
       </md-app-content>
     </md-app>
 
-    <md-snackbar md-position="center" :md-duration="duration" :md-active="!!error.message" md-persistent>
+    <md-snackbar md-position="center" :md-duration="duration" :md-active="!!error.message" @update:mdActive="hide" md-persistent>
       <span>{{ error.message }}</span>
       <md-button class="md-primary" @click="hide">Ok</md-button>
     </md-snackbar>
@@ -24,25 +24,16 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Mutation } from 'vuex-class'
 import { SOCKETIO_ERROR } from '@/store/socket.events';
+import { OSPError } from '@/interfaces/error.interface';
 
 @Component
 export default class AppComponent extends Vue {
 
   @State('error')
-  error!: { message: string }
+  error!: OSPError
 
   @Mutation(SOCKETIO_ERROR)
-  setError!: ( error: { message: string } ) => void
-
-  @Watch('error')
-  enforceDuration() {
-    clearTimeout(this.durationTimeoutId)
-    if(this.error.message) {
-      this.durationTimeoutId = setTimeout(() => this.hide(), this.duration)
-    }
-  }
-
-  durationTimeoutId?: number
+  setError!: ( error: OSPError ) => void
 
   duration = 4000
 
