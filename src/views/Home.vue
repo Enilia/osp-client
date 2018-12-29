@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 @Component<HomeComponent>({
   computed: {
     valid() {
-      return /^[a-z0-9]{6}$/.test(this.roomid)
+      return this.isValid(this.roomid)
     }
   }
 })
@@ -37,12 +37,16 @@ export default class HomeComponent extends Vue {
 
   roomid: string = ''
 
-  created() {
-    let join = this.$route.query.join
-    if(join) {
-      this.$router.replace({ query: {} })
+  @Watch('$route.query.join', { immediate: true })
+  checkJoin( join: string ) {
+    this.$router.replace({ query: {} })
+    if(join && this.isValid(join)) {
       this.join( join as string )
     }
+  }
+
+  isValid( id: string ) {
+    return /^[a-z0-9]{6}$/.test(id)
   }
 
   create() {
