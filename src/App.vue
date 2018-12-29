@@ -7,7 +7,9 @@
         <osp-user></osp-user>
       </md-app-toolbar>
       <md-app-content>
-        <router-view/>
+        <transition name="fade" mode="out-in">
+          <router-view/>
+        </transition>
       </md-app-content>
     </md-app>
 
@@ -60,6 +62,13 @@ export default class AppComponent extends Vue {
 
 .md-toolbar {
   flex-wrap: nowrap;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
 }
 
 </style>

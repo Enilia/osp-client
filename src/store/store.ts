@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { SOCKETIO_USER_UPDATED, SOCKETIO_USER_RENAMED, SOCKETIO_ERROR } from './socket.events';
+import { SOCKETIO_USER_UPDATED, SOCKETIO_USER_RENAMED, SOCKETIO_ERROR, SOCKETIO_ROOM_JOINED } from './socket.events';
+import Router from '../router'
 
 Vue.use(Vuex);
 
@@ -13,6 +14,10 @@ export default new Vuex.Store({
     error: {
       message: ''
     },
+    room: {
+      id: '',
+      clients: [],
+    }
   },
   mutations: {
     [SOCKETIO_USER_UPDATED] ( state, { id, nickname } ) {
@@ -24,8 +29,15 @@ export default new Vuex.Store({
     [SOCKETIO_ERROR] ( state, error ) {
       state.error = error
     },
+    [SOCKETIO_ROOM_JOINED] ( state, { id, clients } ) {
+      state.room = { ...state.room, id, clients }
+      Router.push({ name: 'room', params: { id } })
+    },
   },
   actions: {
 
   },
+  getters: {
+    hasRoom: (state) => state.room.id
+  }
 });

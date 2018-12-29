@@ -6,7 +6,7 @@
           <label>Room</label>
           <md-input autofocus v-model="roomid" required maxlength="6"></md-input>
         </md-field>
-        <md-button class="md-raised md-accent" @click="join" :disabled="!valid">Join</md-button>
+        <md-button class="md-raised md-accent" @click="join(roomid)" :disabled="!valid">Join</md-button>
       </md-card-content>
     </md-card>
 
@@ -35,12 +35,20 @@ export default class HomeComponent extends Vue {
 
   roomid: string = ''
 
+  created() {
+    let join = this.$route.query.join
+    if(join) {
+      this.$router.replace({ query: {} })
+      this.join( join as string )
+    }
+  }
+
   create() {
     this.$socket.emit('createRoom')
   }
 
-  join() {
-    this.$socket.emit('joinRoom', this.roomid)
+  join( id: string ) {
+    this.$socket.emit('joinRoom', id)
   }
 
 }
