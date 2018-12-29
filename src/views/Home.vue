@@ -2,11 +2,11 @@
   <div class="home">
     <md-card md-with-hover>
       <md-card-content class="create">
-        <md-field>
+        <md-field md-clearable>
           <label>Room</label>
-          <md-input autofocus v-model="roomid"></md-input>
+          <md-input autofocus v-model="roomid" required maxlength="6"></md-input>
         </md-field>
-        <md-button class="md-raised md-accent" @click="join">Join</md-button>
+        <md-button class="md-raised md-accent" @click="join" :disabled="!valid">Join</md-button>
       </md-card-content>
     </md-card>
 
@@ -24,7 +24,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component
+@Component<HomeComponent>({
+  computed: {
+    valid() {
+      return /[a-z0-9]{6}/.test(this.roomid)
+    }
+  }
+})
 export default class HomeComponent extends Vue {
 
   roomid: string = ''
