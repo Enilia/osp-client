@@ -23,15 +23,28 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { State } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { Room } from '@/interfaces/room.interface';
+import { User } from '@/interfaces/user.interface';
 
 
-@Component
+@Component<RoomComponent>({
+  beforeRouteLeave(to, from, next) {
+    this.$socket.emit('leaveRoom')
+    this.leaveRoom()
+    next()
+  }
+})
 export default class RoomComponent extends Vue {
 
   @State('room')
   room!: Room
+
+  @State('user')
+  user!: User
+
+  @Action('leaveRoom')
+  leaveRoom!: () => void
 
 }
 
