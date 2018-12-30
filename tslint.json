@@ -19,6 +19,6 @@
       true,
       "never",
       "ignore-bound-class-methods"
-    ],
+    ]
   }
 }
