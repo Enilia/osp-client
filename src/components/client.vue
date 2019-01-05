@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { State } from 'vuex-class';
-import { User } from '@/interfaces/user.interface';
+import { User } from '@/classes/user.class';
 
 @Component<ClientComponent>({
   computed: {

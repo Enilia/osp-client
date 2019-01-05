@@ -10,8 +10,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter } from 'vuex-class';
-import { Room } from '@/interfaces/room.interface';
-import { User } from '@/interfaces/user.interface';
+import { Room } from '@/classes/room.class';
+import { User } from '@/classes/user.class';
 
 
 @Component<RoomComponent>({

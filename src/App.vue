@@ -24,7 +24,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Mutation } from 'vuex-class'
 import { SOCKETIO_ERROR } from '@/store/socket.events';
-import { OSPError } from '@/interfaces/error.interface';
+import { OSPError } from '@/classes/error.class';
 
 @Component
 export default class AppComponent extends Vue {

@@ -9,9 +9,9 @@ import {
   SOCKETIO_ROOM_USER_LEFT,
   SOCKETIO_ROOM_USER_RENAMED } from './socket.events'
 import Router from '../router'
-import { User } from '../interfaces/user.interface'
-import { Room } from '../interfaces/room.interface'
-import { OSPError } from '../interfaces/error.interface'
+import { User, UserDTO } from '../classes/user.class'
+import { Room, RoomDTO } from '../classes/room.class'
+import { OSPError, OSPErrorDTO } from '../classes/error.class'
 
 Vue.use(Vuex)
 
