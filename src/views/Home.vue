@@ -87,6 +87,6 @@ export default class HomeComponent extends Vue {
 
   .create {
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
 </style>
