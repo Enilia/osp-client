@@ -19,6 +19,21 @@
       true,
       "never",
       "ignore-bound-class-methods"
+    ],
+    "curly": [true, "ignore-same-line"],
+    "arrow-parens": false,
+    "whitespace": [
+      true,
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-separator",
+      "check-rest-spread",
+      "check-type",
+      "check-typecast",
+      "check-type-operator",
+      "check-preblock",
+      "check-postbrace"
     ]
   }
 }

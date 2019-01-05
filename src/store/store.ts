@@ -1,12 +1,19 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import { SOCKETIO_USER_UPDATED, SOCKETIO_USER_RENAMED, SOCKETIO_ERROR, SOCKETIO_ROOM_JOINED, SOCKETIO_ROOM_USER_JOINED, SOCKETIO_ROOM_USER_LEFT, SOCKETIO_ROOM_USER_RENAMED } from './socket.events';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import {
+  SOCKETIO_USER_UPDATED,
+  SOCKETIO_USER_RENAMED,
+  SOCKETIO_ERROR,
+  SOCKETIO_ROOM_JOINED,
+  SOCKETIO_ROOM_USER_JOINED,
+  SOCKETIO_ROOM_USER_LEFT,
+  SOCKETIO_ROOM_USER_RENAMED } from './socket.events'
 import Router from '../router'
-import { User } from '../interfaces/user.interface';
-import { Room } from '../interfaces/room.interface';
-import { OSPError } from '../interfaces/error.interface';
+import { User } from '../interfaces/user.interface'
+import { Room } from '../interfaces/room.interface'
+import { OSPError } from '../interfaces/error.interface'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
@@ -16,7 +23,7 @@ export default new Vuex.Store({
       nickname: '',
     } as User,
     error: {
-      message: ''
+      message: '',
     } as OSPError,
     room: {
       id: '',
@@ -24,45 +31,45 @@ export default new Vuex.Store({
     } as Room,
   },
   mutations: {
-    [SOCKETIO_USER_UPDATED] ( state, { id, nickname, socketid }: User ) {
+    [SOCKETIO_USER_UPDATED]( state, { id, nickname, socketid }: User ) {
       state.user = { ...state.user, id, nickname, socketid }
     },
-    [SOCKETIO_USER_RENAMED] ( state, nickname ) {
+    [SOCKETIO_USER_RENAMED]( state, nickname ) {
       state.user = { ...state.user, nickname }
     },
-    [SOCKETIO_ERROR] ( state, error ) {
+    [SOCKETIO_ERROR]( state, error ) {
       state.error = error
     },
-    [SOCKETIO_ROOM_JOINED] ( state, { id, clients } ) {
+    [SOCKETIO_ROOM_JOINED]( state, { id, clients } ) {
       state.room = { ...state.room, id, clients }
       Router.push({ name: 'room', params: { id } })
     },
-    [SOCKETIO_ROOM_USER_JOINED] ( state, client: User ) {
-      let clients = state.room.clients
+    [SOCKETIO_ROOM_USER_JOINED]( state, client: User ) {
+      const clients = state.room.clients
       clients.push( client )
       Vue.set(state.room, 'clients', clients)
     },
-    [SOCKETIO_ROOM_USER_LEFT] ( state, client: User ) {
+    [SOCKETIO_ROOM_USER_LEFT]( state, client: User ) {
       let clients = state.room.clients
       clients = clients.filter( c => c.socketid !== client.socketid )
       Vue.set(state.room, 'clients', clients)
     },
-    [SOCKETIO_ROOM_USER_RENAMED] ( state, client: User ) {
-      let clients = state.room.clients
-      let user = clients.find( c => c.socketid === client.socketid )
-      if(!user) return
+    [SOCKETIO_ROOM_USER_RENAMED]( state, client: User ) {
+      const clients = state.room.clients
+      const user = clients.find( c => c.socketid === client.socketid )
+      if( !user ) return
       user.nickname = client.nickname
       Vue.set(state.room, 'clients', clients)
     },
   },
   actions: {
-    leaveRoom({state}) {
+    leaveRoom({ state }) {
       state.room = { id: '', clients: [] }
-    }
+    },
   },
   getters: {
     hasRoom: state => state.room.id,
     roomOtherClients: state => state.room.clients.filter( c => c.socketid !== state.user.socketid ),
     roomClientsUserFirst: (state, getters) => [state.user].concat(getters.roomOtherClients),
   },
-});
+})
