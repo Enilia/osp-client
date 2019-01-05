@@ -61,6 +61,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    hasRoom: (state) => state.room.id
-  }
+    hasRoom: state => state.room.id,
+    roomOtherClients: state => state.room.clients.filter( c => c.socketid !== state.user.socketid ),
+    roomClientsUserFirst: (state, getters) => [state.user].concat(getters.roomOtherClients),
+  },
 });
