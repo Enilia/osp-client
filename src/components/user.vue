@@ -4,7 +4,7 @@
       <md-field>
         <md-icon>person</md-icon>
         <label v-osp-width="user.id" @osp-width-change="useridWidth = $event"> @{{ user.id }} </label>
-        <md-input :value="user.nickname" ref="input" @blur="rename" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
+        <md-input :value="user.nickname" ref="input" @blur="rename(newNickname)" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
         <md-icon>edit</md-icon>
       </md-field>
     </form>
@@ -17,8 +17,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { User } from '@/classes/user.class';
+import { RENAME_USER } from '@/config/store-actions';
 
 @Component<UserComponent>({
   computed: {
@@ -47,10 +48,8 @@ export default class UserComponent extends Vue {
     input.blur()
   }
 
-  rename() {
-    if(this.newNickname !== this.user.nickname)
-      this.$socket.emit('renameUser', this.newNickname)
-  }
+  @Action(RENAME_USER)
+  rename!: ( newNickname: string ) => void
 
 }
 

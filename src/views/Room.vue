@@ -17,7 +17,6 @@ import { LEAVE_ROOM } from '../config/store-actions';
 
 @Component<RoomComponent>({
   beforeRouteLeave(to, from, next) {
-    this.$socket.emit(LEAVE_ROOM)
     this.leaveRoom()
     next()
   }

@@ -15,7 +15,8 @@ import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
 import { OSPError, OSPErrorDTO } from '../classes/error.class'
 import { SET_USER, SET_ROOM, SET_ERROR } from '../config/store-mutations'
-import { LEAVE_ROOM, CLEAR_ERROR } from '../config/store-actions'
+import { LEAVE_ROOM, CLEAR_ERROR, CREATE_ROOM, JOIN_ROOM, RENAME_USER } from '../config/store-actions'
+import $socket from './socket-instance'
 
 Vue.use(Vuex)
 
@@ -42,11 +43,25 @@ export default new Vuex.Store({
   },
   actions: {
     [LEAVE_ROOM]({ commit }) {
+      $socket.emit(LEAVE_ROOM)
       commit( SET_ROOM, new Room() )
     },
 
     [CLEAR_ERROR]({ commit }) {
       commit( SET_ERROR, new OSPError() )
+    },
+
+    [CREATE_ROOM]() {
+      $socket.emit( CREATE_ROOM )
+    },
+
+    [JOIN_ROOM]( context, id: string ) {
+      $socket.emit( JOIN_ROOM, id )
+    },
+
+    [RENAME_USER]( { state: { user: { nickname } } }, newNickname: string ) {
+      if( nickname === newNickname ) return
+      $socket.emit( RENAME_USER, newNickname )
     },
 
     [SOCKETIO_CONNECTED]() {
