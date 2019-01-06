@@ -1,10 +1,10 @@
 <template>
   <div>
     <form novalidate @submit.prevent="blur">
-      <md-field>
+      <md-field :md-counter="false">
         <md-icon>person</md-icon>
         <label v-osp-width="user.id" @osp-width-change="useridWidth = $event"> @{{ user.id }} </label>
-        <md-input :value="user.nickname" ref="input" @blur="rename(newNickname)" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }"></md-input>
+        <md-input :value="user.nickname" ref="input" @blur="rename(newNickname)" @input="newNickname = $event" :style="{ width: inputWidth + 'px' }" maxlength="20"></md-input>
         <md-icon>edit</md-icon>
       </md-field>
     </form>
