@@ -26,6 +26,7 @@ export default new Vuex.Store({
     user: new User(),
     error: [] as OSPError[],
     room: new Room(),
+    previousRoom: new Room(),
   },
   mutations: {
 
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     },
 
     [M_SET_ROOM]( state, room: Room ) {
+      state.previousRoom = state.room
       state.room = room
     },
 
@@ -47,8 +49,9 @@ export default new Vuex.Store({
 
   },
   actions: {
-    [A_LEAVE_ROOM]() {
+    [A_LEAVE_ROOM]({ commit }) {
       $socket.emit(A_LEAVE_ROOM)
+      commit( M_SET_ROOM, new Room() )
     },
 
     [A_CLEAR_ERROR]({ commit }) {
@@ -76,7 +79,10 @@ export default new Vuex.Store({
       Router.push({ name: 'home' })
     },
 
-    [SOCKETIO_USER_UPDATED]( { commit, dispatch, state: { user: { nickname }, room: { id } } }, user: UserDTO ) {
+    [SOCKETIO_USER_UPDATED](
+      { commit, dispatch, state: { user: { nickname }, previousRoom: { id } } },
+      user: UserDTO,
+    ) {
       commit( M_SET_USER, User.fromJSON(user) )
       dispatch( A_RENAME_USER, nickname )
       if( id ) dispatch( A_JOIN_ROOM, id )
