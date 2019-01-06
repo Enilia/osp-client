@@ -3,7 +3,7 @@ import './registerHooks';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
-import './socket';
+import './vue-socket';
 import './material'
 import './components'
 import './directives'
