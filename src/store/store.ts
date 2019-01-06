@@ -7,7 +7,9 @@ import {
   SOCKETIO_ROOM_JOINED,
   SOCKETIO_ROOM_USER_JOINED,
   SOCKETIO_ROOM_USER_LEFT,
-  SOCKETIO_ROOM_USER_RENAMED } from './socket.events'
+  SOCKETIO_ROOM_USER_RENAMED,
+  SOCKETIO_CONNECTED,
+  SOCKETIO_DISCONNECTED } from './socket.events'
 import Router from '../router'
 import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
@@ -45,6 +47,15 @@ export default new Vuex.Store({
 
     [CLEAR_ERROR]({ commit }) {
       commit( SET_ERROR, new OSPError() )
+    },
+
+    [SOCKETIO_CONNECTED]() {
+      //
+    },
+
+    [SOCKETIO_DISCONNECTED]({ commit }) {
+      commit( SET_ERROR, new OSPError('You have been disconnected') )
+      Router.push({ name: 'home' })
     },
 
     [SOCKETIO_USER_UPDATED]( { commit }, user: UserDTO ) {
