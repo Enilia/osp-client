@@ -12,7 +12,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter } from 'vuex-class';
 import { Room } from '@/classes/room.class';
 import { User } from '@/classes/user.class';
-import { LEAVE_ROOM } from '../store/store-actions';
+import { LEAVE_ROOM } from '../config/store-actions';
 
 
 @Component<RoomComponent>({

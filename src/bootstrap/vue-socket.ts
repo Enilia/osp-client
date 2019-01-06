@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueSocketIOExt from 'vue-socket.io-extended'
 import $socket from './socket-instance'
-import store from './store/store'
-import { SOCKETIO_STORE_PREFIX } from './store/socket.events'
+import store from './store'
+import { SOCKETIO_STORE_PREFIX } from '../config/socket.events'
 
 const identity = (s: string) => s
 

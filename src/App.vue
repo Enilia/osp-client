@@ -23,9 +23,9 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class'
-import { SOCKETIO_ERROR } from '@/store/socket.events';
+import { SOCKETIO_ERROR } from '@/config/socket.events';
 import { OSPError, OSPErrorDTO } from '@/classes/error.class';
-import { CLEAR_ERROR } from '@/store/store-actions';
+import { CLEAR_ERROR } from '@/config/store-actions';
 
 @Component
 export default class AppComponent extends Vue {

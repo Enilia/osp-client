@@ -9,13 +9,13 @@ import {
   SOCKETIO_ROOM_USER_LEFT,
   SOCKETIO_ROOM_USER_RENAMED,
   SOCKETIO_CONNECTED,
-  SOCKETIO_DISCONNECTED } from './socket.events'
+  SOCKETIO_DISCONNECTED } from '../config/socket.events'
 import Router from '../router'
 import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
 import { OSPError, OSPErrorDTO } from '../classes/error.class'
-import { SET_USER, SET_ROOM, SET_ERROR } from './store-mutations'
-import { LEAVE_ROOM, CLEAR_ERROR } from './store-actions'
+import { SET_USER, SET_ROOM, SET_ERROR } from '../config/store-mutations'
+import { LEAVE_ROOM, CLEAR_ERROR } from '../config/store-actions'
 
 Vue.use(Vuex)
 
