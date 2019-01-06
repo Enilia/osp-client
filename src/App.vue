@@ -22,9 +22,10 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { State, Getter, Mutation } from 'vuex-class'
+import { State, Action } from 'vuex-class'
 import { SOCKETIO_ERROR } from '@/store/socket.events';
 import { OSPError, OSPErrorDTO } from '@/classes/error.class';
+import { CLEAR_ERROR } from '@/store/store-actions';
 
 @Component
 export default class AppComponent extends Vue {
@@ -32,13 +33,13 @@ export default class AppComponent extends Vue {
   @State('error')
   error!: OSPError
 
-  @Mutation(SOCKETIO_ERROR)
-  setError!: ( error: OSPErrorDTO ) => void
+  @Action(CLEAR_ERROR)
+  clearError!: () => void
 
   duration = 4000
 
   hide() {
-    this.setError( {message:''} )
+    this.clearError()
   }
 
 }

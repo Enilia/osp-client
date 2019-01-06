@@ -12,6 +12,8 @@ import Router from '../router'
 import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
 import { OSPError, OSPErrorDTO } from '../classes/error.class'
+import { SET_USER, SET_ROOM, SET_ERROR } from './store-mutations'
+import { LEAVE_ROOM, CLEAR_ERROR } from './store-actions';
 
 Vue.use(Vuex)
 
@@ -22,40 +24,58 @@ export default new Vuex.Store({
     room: new Room(),
   },
   mutations: {
-    [SOCKETIO_USER_UPDATED]( state, user: UserDTO ) {
-      state.user = User.fromJSON(user)
+
+    [SET_USER]( state, user: User ) {
+      state.user = user
     },
 
-    [SOCKETIO_USER_RENAMED]( state, nickname: string ) {
-      state.user = state.user.rename( nickname )
+    [SET_ROOM]( state, room: Room ) {
+      state.room = room
     },
 
-    [SOCKETIO_ERROR]( state, error: OSPErrorDTO ) {
-      state.error = OSPError.fromJSON( error )
-    },
-
-    [SOCKETIO_ROOM_JOINED]( state, room: RoomDTO ) {
-      const { id } = state.room = Room.fromJSON( room )
-      Router.push({ name: 'room', params: { id } })
-    },
-
-    [SOCKETIO_ROOM_USER_JOINED]( state, client: UserDTO ) {
-      state.room = state.room.add( client )
-    },
-
-    [SOCKETIO_ROOM_USER_LEFT]( state, client: UserDTO ) {
-      state.room = state.room.remove( client )
-    },
-
-    [SOCKETIO_ROOM_USER_RENAMED]( state, client: UserDTO ) {
-      state.room = state.room.renameUser( client )
+    [SET_ERROR]( state, error: OSPError ) {
+      state.error = error
     },
 
   },
   actions: {
-    leaveRoom({ state }) {
-      state.room = new Room()
+    [LEAVE_ROOM]({ commit }) {
+      commit( SET_ROOM, new Room() )
     },
+
+    [CLEAR_ERROR]({ commit }) {
+      commit( SET_ERROR, new OSPError() )
+    },
+
+    [SOCKETIO_USER_UPDATED]( { commit }, user: UserDTO ) {
+      commit( SET_USER, User.fromJSON(user) )
+    },
+
+    [SOCKETIO_USER_RENAMED]( { commit, state }, nickname: string ) {
+      commit( SET_USER, state.user.rename( nickname ) )
+    },
+
+    [SOCKETIO_ERROR]( { commit }, error: OSPErrorDTO ) {
+      commit( SET_ERROR, OSPError.fromJSON( error ) )
+    },
+
+    [SOCKETIO_ROOM_JOINED]( { commit }, room: RoomDTO ) {
+      commit( SET_ROOM, Room.fromJSON( room ) )
+      Router.push({ name: 'room', params: { id: room.id } })
+    },
+
+    [SOCKETIO_ROOM_USER_JOINED]( { commit, state }, client: UserDTO ) {
+      commit( SET_ROOM, state.room.add( client ) )
+    },
+
+    [SOCKETIO_ROOM_USER_LEFT]( { commit, state }, client: UserDTO ) {
+      commit( SET_ROOM, state.room.remove( client ) )
+    },
+
+    [SOCKETIO_ROOM_USER_RENAMED]( { commit, state }, client: UserDTO ) {
+      commit( SET_ROOM, state.room.renameUser( client ) )
+    },
+
   },
   getters: {
     hasRoom: state => state.room.id,

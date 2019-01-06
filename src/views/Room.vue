@@ -12,11 +12,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter } from 'vuex-class';
 import { Room } from '@/classes/room.class';
 import { User } from '@/classes/user.class';
+import { LEAVE_ROOM } from '../store/store-actions';
 
 
 @Component<RoomComponent>({
   beforeRouteLeave(to, from, next) {
-    this.$socket.emit('leaveRoom')
+    this.$socket.emit(LEAVE_ROOM)
     this.leaveRoom()
     next()
   }
@@ -29,7 +30,7 @@ export default class RoomComponent extends Vue {
   @Getter('roomClientsUserFirst')
   roomClients!: User[]
 
-  @Action('leaveRoom')
+  @Action(LEAVE_ROOM)
   leaveRoom!: () => void
 
 }
