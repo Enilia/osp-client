@@ -77,8 +77,8 @@ export default new Vuex.Store({
       if( id ) dispatch( JOIN_ROOM, id )
     },
 
-    [SOCKETIO_USER_RENAMED]( { commit, state }, nickname: string ) {
-      commit( SET_USER, state.user.rename( nickname ) )
+    [SOCKETIO_USER_RENAMED]( { commit, state: { user } }, nickname: string ) {
+      commit( SET_USER, user.rename( nickname ) )
     },
 
     [SOCKETIO_ERROR]( { commit }, error: OSPErrorDTO ) {
@@ -90,22 +90,22 @@ export default new Vuex.Store({
       Router.push({ name: 'room', params: { id: room.id } })
     },
 
-    [SOCKETIO_ROOM_USER_JOINED]( { commit, state }, client: UserDTO ) {
-      commit( SET_ROOM, state.room.add( client ) )
+    [SOCKETIO_ROOM_USER_JOINED]( { commit, state: { room } }, client: UserDTO ) {
+      commit( SET_ROOM, room.add( client ) )
     },
 
-    [SOCKETIO_ROOM_USER_LEFT]( { commit, state }, client: UserDTO ) {
-      commit( SET_ROOM, state.room.remove( client ) )
+    [SOCKETIO_ROOM_USER_LEFT]( { commit, state: { room } }, client: UserDTO ) {
+      commit( SET_ROOM, room.remove( client ) )
     },
 
-    [SOCKETIO_ROOM_USER_RENAMED]( { commit, state }, client: UserDTO ) {
-      commit( SET_ROOM, state.room.renameUser( client ) )
+    [SOCKETIO_ROOM_USER_RENAMED]( { commit, state: { room } }, client: UserDTO ) {
+      commit( SET_ROOM, room.renameUser( client ) )
     },
 
   },
   getters: {
-    hasRoom: state => state.room.id,
-    roomOtherClients: state => state.room.clients.filter( c => c.socketid !== state.user.socketid ),
-    roomClientsUserFirst: (state, getters) => [state.user].concat(getters.roomOtherClients),
+    hasRoom: ({ room: { id } }) => id,
+    roomOtherClients: ({ room: { clients }, user: { socketid } }) => clients.filter( c => c.socketid !== socketid ),
+    roomClientsUserFirst: ({ user }, getters) => [user].concat( getters.roomOtherClients ),
   },
 })
