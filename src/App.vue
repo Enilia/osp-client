@@ -13,33 +13,36 @@
       </md-app-content>
     </md-app>
 
-    <md-snackbar md-position="center" :md-duration="duration" :md-active="!!error.message" @update:mdActive="hide" md-persistent>
-      <span>{{ error.message }}</span>
-      <md-button class="md-primary" @click="hide">Ok</md-button>
+    <md-snackbar md-position="center" :md-duration="duration" :md-active="active" @update:mdActive="clearError" md-persistent>
+      <span v-if="error">{{ error.message }}</span>
+      <md-button class="md-primary" @click="clearError">Ok</md-button>
     </md-snackbar>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { State, Action } from 'vuex-class'
-import { SOCKETIO_ERROR } from '@/config/socket.events';
-import { OSPError, OSPErrorDTO } from '@/classes/error.class';
-import { CLEAR_ERROR } from '@/config/store-actions';
+import { Action, Getter } from 'vuex-class'
+import { OSPError } from '@/classes/error.class';
+import { CLEAR_ERROR_ACTION } from '@/config/store-actions';
 
 @Component
 export default class AppComponent extends Vue {
 
-  @State('error')
-  error!: OSPError
+  @Getter('activeError')
+  error?: OSPError
 
-  @Action(CLEAR_ERROR)
+  @Action(CLEAR_ERROR_ACTION)
   clearError!: () => void
 
   duration = 4000
 
-  hide() {
-    this.clearError()
+  active = false
+
+  @Watch('error')
+  updateActive( newError?: OSPError, lastError?: OSPError ) {
+    if( newError !== lastError ) this.active = false
+    if( newError ) requestAnimationFrame(() => this.active = true)
   }
 
 }

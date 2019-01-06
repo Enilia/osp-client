@@ -14,8 +14,8 @@ import Router from '../router'
 import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
 import { OSPError, OSPErrorDTO } from '../classes/error.class'
-import { SET_USER, SET_ROOM, SET_ERROR } from '../config/store-mutations'
-import { LEAVE_ROOM, CLEAR_ERROR, CREATE_ROOM, JOIN_ROOM, RENAME_USER } from '../config/store-actions'
+import { SET_USER, SET_ROOM, ADD_ERROR, CLEAR_ERROR_MUTATION } from '../config/store-mutations'
+import { LEAVE_ROOM, CLEAR_ERROR_ACTION, CREATE_ROOM, JOIN_ROOM, RENAME_USER } from '../config/store-actions'
 import $socket from './socket-instance'
 
 Vue.use(Vuex)
@@ -23,7 +23,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: new User(),
-    error: new OSPError(),
+    error: [] as OSPError[],
     room: new Room(),
   },
   mutations: {
@@ -36,18 +36,22 @@ export default new Vuex.Store({
       state.room = room
     },
 
-    [SET_ERROR]( state, error: OSPError ) {
-      state.error = error
+    [ADD_ERROR]( state, error: OSPError ) {
+      state.error = state.error.concat(error)
+    },
+
+    [CLEAR_ERROR_MUTATION]( state ) {
+      state.error = state.error.slice(1)
     },
 
   },
   actions: {
-    [LEAVE_ROOM]({ commit }) {
+    [LEAVE_ROOM]() {
       $socket.emit(LEAVE_ROOM)
     },
 
-    [CLEAR_ERROR]({ commit }) {
-      commit( SET_ERROR, new OSPError() )
+    [CLEAR_ERROR_ACTION]({ commit }) {
+      commit( CLEAR_ERROR_MUTATION )
     },
 
     [CREATE_ROOM]() {
@@ -67,7 +71,7 @@ export default new Vuex.Store({
     // },
 
     [SOCKETIO_DISCONNECTED]({ commit }) {
-      commit( SET_ERROR, new OSPError('You have been disconnected') )
+      commit( ADD_ERROR, new OSPError('You have been disconnected') )
       Router.push({ name: 'home' })
     },
 
@@ -82,7 +86,7 @@ export default new Vuex.Store({
     },
 
     [SOCKETIO_ERROR]( { commit }, error: OSPErrorDTO ) {
-      commit( SET_ERROR, OSPError.fromJSON( error ) )
+      commit( ADD_ERROR, OSPError.fromJSON( error ) )
     },
 
     [SOCKETIO_ROOM_JOINED]( { commit }, room: RoomDTO ) {
@@ -107,5 +111,6 @@ export default new Vuex.Store({
     hasRoom: ({ room: { id } }) => id,
     roomOtherClients: ({ room: { clients }, user: { socketid } }) => clients.filter( c => c.socketid !== socketid ),
     roomClientsUserFirst: ({ user }, getters) => [user].concat( getters.roomOtherClients ),
+    activeError: ({ error }) => error[0],
   },
 })
