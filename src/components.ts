@@ -6,7 +6,7 @@ const requireComponent = require.context(
   // Whether or not to look in subfolders
   false,
   // The regular expression used to match base component filenames
-  /\w+\.vue$/
+  /\w+\.vue$/,
 )
 
 requireComponent.keys().forEach(fileName => {
@@ -25,6 +25,6 @@ requireComponent.keys().forEach(fileName => {
     // Look for the component options on `.default`, which will
     // exist if the component was exported with `export default`,
     // otherwise fall back to module's root.
-    componentConfig.default || componentConfig
+    componentConfig.default || componentConfig,
   )
 })

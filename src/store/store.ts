@@ -15,7 +15,7 @@ import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
 import { OSPError, OSPErrorDTO } from '../classes/error.class'
 import { SET_USER, SET_ROOM, SET_ERROR } from './store-mutations'
-import { LEAVE_ROOM, CLEAR_ERROR } from './store-actions';
+import { LEAVE_ROOM, CLEAR_ERROR } from './store-actions'
 
 Vue.use(Vuex)
 

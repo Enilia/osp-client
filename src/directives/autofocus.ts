@@ -1,7 +1,7 @@
-import Vue, { DirectiveOptions } from 'vue';
+import Vue, { DirectiveOptions } from 'vue'
 
 Vue.directive('autofocus', {
-  inserted: function(el) {
-    el.focus();
-  }
+  inserted(el) {
+    el.focus()
+  },
 } as DirectiveOptions)

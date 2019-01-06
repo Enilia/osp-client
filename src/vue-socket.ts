@@ -15,5 +15,5 @@ Vue.use(
     mutationPrefix: SOCKETIO_STORE_PREFIX,
     eventToMutationTransformer: identity,
     eventToActionTransformer: identity,
-  }
+  },
 )
