@@ -19,7 +19,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { User } from '@/classes/user.class';
-import { RENAME_USER } from '@/config/store-actions';
+import { A_RENAME_USER } from '@/config/store-actions';
 
 @Component<UserComponent>({
   computed: {
@@ -48,7 +48,7 @@ export default class UserComponent extends Vue {
     input.blur()
   }
 
-  @Action(RENAME_USER)
+  @Action(A_RENAME_USER)
   rename!: ( newNickname: string ) => void
 
 }

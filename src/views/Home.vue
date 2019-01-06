@@ -27,7 +27,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Action } from 'vuex-class';
-import { CREATE_ROOM, JOIN_ROOM } from '@/config/store-actions';
+import { A_CREATE_ROOM, A_JOIN_ROOM } from '@/config/store-actions';
 
 @Component<HomeComponent>({
   computed: {
@@ -52,10 +52,10 @@ export default class HomeComponent extends Vue {
     return /^[a-z0-9]{6}$/.test(id)
   }
 
-  @Action(CREATE_ROOM)
+  @Action(A_CREATE_ROOM)
   create!: () => void
 
-  @Action(JOIN_ROOM)
+  @Action(A_JOIN_ROOM)
   join!: ( id: string ) => void
 
 }

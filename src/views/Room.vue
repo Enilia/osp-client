@@ -12,7 +12,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter } from 'vuex-class';
 import { Room } from '@/classes/room.class';
 import { User } from '@/classes/user.class';
-import { LEAVE_ROOM } from '../config/store-actions';
+import { A_LEAVE_ROOM } from '../config/store-actions';
 
 
 @Component<RoomComponent>({
@@ -29,7 +29,7 @@ export default class RoomComponent extends Vue {
   @Getter('roomClientsUserFirst')
   roomClients!: User[]
 
-  @Action(LEAVE_ROOM)
+  @Action(A_LEAVE_ROOM)
   leaveRoom!: () => void
 
 }

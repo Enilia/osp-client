@@ -24,7 +24,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter } from 'vuex-class'
 import { OSPError } from '@/classes/error.class';
-import { CLEAR_ERROR_ACTION } from '@/config/store-actions';
+import { A_CLEAR_ERROR } from '@/config/store-actions';
 
 @Component
 export default class AppComponent extends Vue {
@@ -32,7 +32,7 @@ export default class AppComponent extends Vue {
   @Getter('activeError')
   error?: OSPError
 
-  @Action(CLEAR_ERROR_ACTION)
+  @Action(A_CLEAR_ERROR)
   clearError!: () => void
 
   duration = 4000
