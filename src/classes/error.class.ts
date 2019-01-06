@@ -1,19 +1,28 @@
-import { DTO } from '../types/DTO'
-import { Immutable } from './immutable.class';
+import { Immutable } from './immutable.class'
 
-export class OSPError extends Immutable<OSPError> {
+export interface OSPErrorDTO {
+  readonly message: string
+}
+
+export class OSPError extends Immutable<OSPError> implements OSPErrorDTO {
 
   public static fromJSON( { message }: OSPErrorDTO ): OSPError {
     return new OSPError( message )
   }
 
   constructor(
-    public readonly message = '',
+    public readonly message: string = '',
   ) {
     super()
-    if( new.target === OSPError) Object.freeze( this )
+    if( new.target === OSPError) this.freeze()
+  }
+
+  public setError( message: string ): OSPError {
+    return this.set( { message } )
+  }
+
+  protected copy( { message }: OSPError ): OSPError {
+    return new OSPError( message )
   }
 
 }
-
-export type OSPErrorDTO = DTO<OSPError>

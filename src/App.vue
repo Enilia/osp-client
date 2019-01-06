@@ -24,7 +24,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Mutation } from 'vuex-class'
 import { SOCKETIO_ERROR } from '@/store/socket.events';
-import { OSPError } from '@/classes/error.class';
+import { OSPError, OSPErrorDTO } from '@/classes/error.class';
 
 @Component
 export default class AppComponent extends Vue {
@@ -33,12 +33,12 @@ export default class AppComponent extends Vue {
   error!: OSPError
 
   @Mutation(SOCKETIO_ERROR)
-  setError!: ( error: OSPError ) => void
+  setError!: ( error: OSPErrorDTO ) => void
 
   duration = 4000
 
   hide() {
-    this.setError({message:''})
+    this.setError( {message:''} )
   }
 
 }
