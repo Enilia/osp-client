@@ -44,7 +44,6 @@ export default new Vuex.Store({
   actions: {
     [LEAVE_ROOM]({ commit }) {
       $socket.emit(LEAVE_ROOM)
-      commit( SET_ROOM, new Room() )
     },
 
     [CLEAR_ERROR]({ commit }) {
@@ -64,17 +63,18 @@ export default new Vuex.Store({
       $socket.emit( RENAME_USER, newNickname )
     },
 
-    [SOCKETIO_CONNECTED]() {
-      //
-    },
+    // [SOCKETIO_CONNECTED]() {
+    // },
 
     [SOCKETIO_DISCONNECTED]({ commit }) {
       commit( SET_ERROR, new OSPError('You have been disconnected') )
       Router.push({ name: 'home' })
     },
 
-    [SOCKETIO_USER_UPDATED]( { commit }, user: UserDTO ) {
+    [SOCKETIO_USER_UPDATED]( { commit, dispatch, state: { user: { nickname }, room: { id } } }, user: UserDTO ) {
       commit( SET_USER, User.fromJSON(user) )
+      dispatch( RENAME_USER, nickname )
+      if( id ) dispatch( JOIN_ROOM, id )
     },
 
     [SOCKETIO_USER_RENAMED]( { commit, state }, nickname: string ) {
