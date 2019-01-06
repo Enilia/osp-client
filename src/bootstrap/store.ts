@@ -9,7 +9,8 @@ import {
   SOCKETIO_ROOM_USER_LEFT,
   SOCKETIO_ROOM_USER_RENAMED,
   SOCKETIO_CONNECTED,
-  SOCKETIO_DISCONNECTED } from '../config/socket.events'
+  SOCKETIO_DISCONNECTED,
+  SOCKETIO_EVENT_ROOM_OWNER_CHANGED} from '../config/socket.events'
 import Router from '../router'
 import { User, UserDTO } from '../classes/user.class'
 import { Room, RoomDTO } from '../classes/room.class'
@@ -104,6 +105,10 @@ export default new Vuex.Store({
 
     [SOCKETIO_ROOM_USER_RENAMED]( { commit, state: { room } }, client: UserDTO ) {
       commit( M_SET_ROOM, room.renameUser( client ) )
+    },
+
+    [SOCKETIO_EVENT_ROOM_OWNER_CHANGED]( { commit, state: { room } }, client: UserDTO ) {
+      commit( M_SET_ROOM, room.setOwner( client ) )
     },
 
   },

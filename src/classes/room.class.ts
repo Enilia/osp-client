@@ -38,6 +38,10 @@ export class Room extends Immutable<Room> implements RoomDTO {
     } )
   }
 
+  public setOwner( owner: UserDTO ): Room {
+    return this.set( { owner: User.fromJSON( owner ) } )
+  }
+
   protected copy( { id, clients, owner }: Room ): Room {
     return new Room( id, clients, owner )
   }
