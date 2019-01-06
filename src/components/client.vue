@@ -30,10 +30,10 @@ import { User } from '@/classes/user.class';
 @Component<ClientComponent>({
   computed: {
     isUser() {
-      return this.user.socketid === this.client.socketid
+      return this.client.is( this.user )
     },
     isOwner() {
-      return this.client.socketid === this.owner.socketid
+      return this.client.is( this.owner )
     }
   }
 })
