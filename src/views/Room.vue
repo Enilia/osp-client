@@ -2,8 +2,10 @@
   <div>
     <h2> #{{ room.id }} </h2>
 
-    <osp-client v-for="client in roomClients" :key="client.id" :client="client">
-    </osp-client>
+    <transition-group name="fade-list" tag="div">
+      <osp-client v-for="client in roomClients" :key="client.id" :client="client">
+      </osp-client>
+    </transition-group>
   </div>
 </template>
 
@@ -37,4 +39,9 @@ export default class RoomComponent extends Vue {
 </script>
 
 <style lang="scss">
+
+.fade-list-leave-to {
+  transform: translateX(50%);
+}
+
 </style>

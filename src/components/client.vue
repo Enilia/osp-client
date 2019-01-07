@@ -54,15 +54,6 @@ export default class ClientComponent extends Vue {
 </script>
 
 <style lang="scss">
-@import "~vue-material/dist/theme/engine";
-
-@include md-register-theme("white-card", (
-  primary: md-get-palette-color(grey, 900),
-));
-
-@import "~vue-material/dist/base/theme";
-@import "~vue-material/dist/components/MdCard/theme";
-@import "~vue-material/dist/components/MdChips/theme";
 
 .md-card.client-card {
   width: 250px;

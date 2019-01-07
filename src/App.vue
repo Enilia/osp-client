@@ -59,8 +59,22 @@ export default class AppComponent extends Vue {
   flex-wrap: nowrap;
 }
 
+</style>
+
+<style lang="scss">
+
+.fade-list-move, .fade-list-enter-to, .fade-list-leave-to {
+  transition: all .7s;
+}
+.fade-list-enter, .fade-list-leave-to {
+  opacity: 0;
+}
+.fade-list-leave-active {
+  position: absolute;
+}
+
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s ease;
+  transition: all .7s;
 }
 .fade-enter, .fade-leave-active {
   opacity: 0;
