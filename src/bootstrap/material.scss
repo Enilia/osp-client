@@ -1,10 +1,25 @@
 
-@import "~vue-material/dist/theme/engine";
+@import "~vue-material/src/theme/engine";
 
-@include md-register-theme("white-card", (
-  primary: md-get-palette-color(grey, 900),
+
+@include md-register-theme("default", (
+  primary: md-get-palette-color(blue, A200),
+  accent: md-get-palette-color(red, A200),
+  theme: dark
 ));
 
-@import "~vue-material/dist/base/theme";
-@import "~vue-material/dist/components/MdCard/theme";
-@import "~vue-material/dist/components/MdChips/theme";
+@import "~vue-material/src/theme/all";
+
+@include md-register-theme("grey-card", (
+  primary: md-get-palette-color(grey, 900),
+  accent: md-get-palette-color(red, A200),
+));
+
+@include md-register-theme("white-card", (
+  primary: md-get-palette-color(white, 900),
+  accent: md-get-palette-color(blue, A200),
+));
+
+@import "~vue-material/src/components/MdCard/theme";
+@import "~vue-material/src/components/MdChips/theme";
+@import "~vue-material/src/components/MdButton/theme";

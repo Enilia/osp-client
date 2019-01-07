@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2> #{{ room.id }} </h2>
+    <h2 class="md-title">#{{ room.id }}</h2>
 
     <transition-group name="fade-list" tag="div">
       <osp-client v-for="client in roomClients" :key="client.id" :client="client">

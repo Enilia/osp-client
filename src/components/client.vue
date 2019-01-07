@@ -1,6 +1,6 @@
 <template>
 
-  <md-card md-theme="white-card" class="md-primary md-elevation-1 client-card" :class="{ isUser, isOwner }">
+  <md-card md-theme="grey-card" class="md-primary md-elevation-1 client-card" :class="{ isUser, isOwner }">
     <md-card-header>
       <div class="md-title" v-if="client.nickname"> {{ client.nickname }}</div>
       <div class="md-title" v-else>@{{ client.id }}</div>
@@ -11,7 +11,7 @@
     </md-card-header>
     <md-card-content>
 
-      <md-card class="osp-card md-elevation-3">
+      <md-card md-theme="white-card" class="md-primary osp-card md-elevation-3">
         <md-card-content>
           ?
         </md-card-content>
