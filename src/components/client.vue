@@ -7,7 +7,9 @@
       <div class="md-subhead">
         <div class="client_id">@{{ client.id }}</div>
       </div>
-      <md-chip v-if="isOwner" class="md-accent isOwner">Owner</md-chip>
+      <transition name="fade" mode="out-in">
+        <md-chip v-if="isOwner" class="md-accent isOwner">Owner</md-chip>
+      </transition>
     </md-card-header>
     <md-card-content>
 
