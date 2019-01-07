@@ -15,7 +15,10 @@
 
       <md-card md-theme="white-card" class="md-primary osp-card md-elevation-3">
         <md-card-content>
-          ?
+          <transition name="fade" mode="out-in">
+            <md-button v-if="isOwner && isUser" class="md-raised md-accent">Start vote</md-button>
+            <span v-else>?</span>
+          </transition>
         </md-card-content>
       </md-card>
 
